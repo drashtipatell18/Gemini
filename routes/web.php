@@ -13,3 +13,4 @@ Route::post('/signupStore', [LoginController::class, 'SignupStore'])->name('sign
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('upgrade', [HomeController::class, 'Upgrade'])->name('upgrade');
+Route::get('public_links', [HomeController::class, 'PublicLinks'])->name('public_links');

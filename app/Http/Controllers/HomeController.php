@@ -15,4 +15,8 @@ class HomeController extends Controller
     {
         return view('Upgrad');
     }
+    public function PublicLinks()
+    {
+        return view('Public_Links');
+    }
 }

@@ -85,7 +85,7 @@
                                    
                                 </li>
                                 <li>
-                                    <a href="" class="w-[100%] items-center flex gap-5">
+                                    <a href="{{ route('public_links') }}" class="w-[100%] items-center flex gap-5">
                                         <span class="material-symbols-outlined"> link </span>
                                         Your public links
                                     </a>
@@ -126,7 +126,7 @@
                 <div class="relative ">
                     <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
                     <div class="pl-48px">
-                        <h1 class="text-2xl " style="color: var(--text-main);">YOYO22222</h1>
+                        <h1 class="text-2xl " style="color: var(--text-main);">YOYO</h1>
                         <div class="relative">
                             <button id="model-toggle"
                                 class="mt-1 rounded-full flex items-center justify-center w-[100px] h-6 font-medium text-sm "
