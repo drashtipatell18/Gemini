@@ -19,3 +19,6 @@ Route::get('explore_gem', [HomeController::class, 'ExploreGem'])->name('explore_
 Route::get('new_gem', [HomeController::class, 'NewGem'])->name('new_gem');
 Route::get('career_guide', [HomeController::class, 'CareerGuide'])->name('career_guide');
 Route::get('chess_champ', [HomeController::class, 'chessChamp'])->name('chess_champ');
+
+Route::get('brainstormer', [HomeController::class, 'brainstomer'])->name('brainstormer');
+Route::get('coding_partner', [HomeController::class, 'codingPartner'])->name('coding_partner');

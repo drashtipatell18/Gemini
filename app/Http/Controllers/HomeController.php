@@ -43,4 +43,14 @@ class HomeController extends Controller
     {
         return view('Chess_champ');
     }
+
+    public function brainstomer()
+    {
+        return view('Brainstormer');
+    }
+
+    public function codingPartner()
+    {
+        return view('Coding_partner');
+    }
 }
