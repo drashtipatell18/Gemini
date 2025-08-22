@@ -52,7 +52,7 @@
                                 <span class="new-chat">New Chat</span>
                             </li>
                             <li class="diamond">
-                                <a href="" class="w-[100%] items-center flex gap-5"> <span
+                                <a href="{{ route('explore_gem') }}" class="w-[100%] items-center flex gap-5"> <span
                                         class="material-symbols-outlined">diamond </span>
                                     <span>Explore Gems</span>
                                 </a>

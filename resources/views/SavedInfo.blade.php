@@ -1,0 +1,325 @@
+
+@extends('layouts.main')
+@section('content')
+
+    <style>
+        .SavedInfo-chat-content-wrapper {
+            max-width: 100%;
+        }
+
+        .savedInfo-gemini-data {
+            height: 100%;
+        }
+    </style>
+
+    <div class="w-[100%]">
+        <div class="backdrop" id="backdrop"></div>
+        <div class="gemini-data savedInfo-gemini-data">
+            <div class="main-chat-area">
+                <div class="chat-content-wrapper SavedInfo-chat-content-wrapper"
+                    style="background-color: var(--bg-main);">
+                    <div class="container relative">
+                        <div class="info">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-3xl flex items-center g-2 gap-5">Info you asked YOYO to save
+                                    <div class="relative">
+                                        <span id="gemini-tool"
+                                            class="x-flex material-symbols-outlined rounded-full hover:bg-[--bg-hover] w-[40px] h-[40px] items-center justify-center flex cursor-pointer">
+                                            info
+                                        </span>
+                                        <div id="gemini-tool-show"
+                                            class="w-[200px] bg-[#E3E3E3] text-[#272727] text-xs p-1 rounded-md absolute top-[100%] right-0 hidden rounded-md shadow-lg">
+                                            <p>Info is saved until you delete it. You can turn this off at any
+                                                time.<a rel="stylesheet" class="underline"
+                                                    href="https://support.google.com/gemini/answer/15637730?visit_id=638853915152956665-2686517658&p=saved_info&rd=1"
+                                                    target="_blank"> Learn how saved info is used </a></p>
+                                        </div>
+                                    </div>
+                                </h3>
+
+
+                                <label class="switch">
+                                    <input id="switch-box" type="checkbox" checked>
+                                    <span class="slider round "></span>
+                                </label>
+                            </div>
+                            <p class="text-xl text-[--sidebar-text] mt-5 mb-8 lg:w-[80%] w-full">Share info about
+                                your life
+                                and preferences to get more
+                                helpful responses. Add new info here or ask YOYO to remember something during a
+                                chat.
+                            </p>
+                            <div class="flex mb-8 justify-between items-center">
+                                <div class="flex gap-4">
+                                    <button id="add-info"
+                                        class="bg-[--add-btn] text-[--add-btn-text] text-md hover:bg-[#9BBBEF] py-2 px-5 rounded-3xl font-semibold  flex gap-2 disabled:bg-[--add-diseble-btn] disabled:text-[#7C7C7C]"><span
+                                            class="font-semibold ">+</span>Add</button>
+                                    <button id="example-info"
+                                        class=" text-[--input-border-focus] border border text-md hover:bg-[--examples-btn-hover] py-2 px-5 rounded-3xl font-semibold">Show
+                                        examples
+                                    </button>
+                                </div>
+
+                                <div id="all-delete">
+                                    <button id="delete-all-btn"
+                                        class="text-[--input-border-focus] border border-[--border-color] text-md hover:bg-[--examples-btn-hover] py-2 px-5 rounded-3xl font-semibold">
+                                        Delete All
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="savedData"></div>
+
+                        </div>
+
+                    </div>
+
+                    <form id="saveinfo-form"
+                        class="bg-[--form-theme] lg:w-[40%] z-[999]     md:w-[60%] sm:w-[80%] w-[90%] p-5 rounded-2xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute hidden rounded-2xl shadow-lg">
+                        <h3 class="text-[--text-main] text-2xl "> What do you want YOYO to remember?</h3>
+
+                        <textarea id="message"
+                            class="w-full mt-8 font-semibold bg-[--input-bg] h-64 p-3 border text-lg text-[--textarea-text]  border-[--border-color]-300 rounded-xl focus:outline-none focus:ring focus:border-[--input-border-focus] focus:ring-[--input-border-focus] resize-none textarea"
+                            name="textarea" placeholder="For example, “I prefer short, concise responses”"></textarea>
+
+                        <div class="flex gap-2 justify-end mt-8">
+                            <button id="saveform-cancle" type="reset"
+                                class=" text-[--input-border-focus] text-md hover:bg-[--examples-btn-hover] py-2 px-3 rounded-3xl ">Cancel</button>
+                            <button id="submitBtn" type="submit"
+                                class=" bg-[--add-btn] text-[--add-btn-text] px-6 py-2 rounded-3xl disabled:bg-[--add-diseble-btn] disabled:text-[--add-diseble-btn-text] "
+                                disabled>Submit</button>
+                        </div>
+
+                    </form>
+
+                    <form action="" id="example-form"
+                        class="bg-[--form-theme] lg:w-[30%] z-[999] md:w-[50%] sm:w-[70%] w-[85%] pt-5 px-8 pb-6  rounded-2xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute hidden rounded-2xl shadow-lg">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3 class="text-[--text-main] text-2xl ">Examples</h3>
+                            <span id="example-close-icon" class="cursor-pointer material-symbols-outlined">
+                                close
+                            </span>
+                        </div>
+                        <ul class="list-disc block ml-5 text-[--sidebar-text] text-sm flex flex-col gap-2 ">
+                            <li>Use simple language and avoid jargon</li>
+                            <li>I’m vegetarian, so don’t suggest recipes with meat</li>
+                            <li>After responding, include a Spanish translation</li>
+                            <li>When trip planning, include the cost per day</li>
+                            <li>I can only write code in JavaScript</li>
+                            <li>I prefer short, concise responses</li>
+                        </ul>
+                        <div class="flex justify-end mt-8">
+                            <button id="example-close"
+                                class=" text-[--input-border-focus] text-md hover:bg-[--examples-btn-hover] py-2 px-3 rounded-3xl font-semibold ">Close</button>
+                        </div>
+                    </form>
+
+
+                    <div id="deleteModal"
+                        class="bg-[--form-theme] pt-5 lg:w-[40%] md:w-[60%] sm:w-[80%] w-[90%] px-8 pb-6 rounded-2xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute hidden z-50 rounded-2xl shadow-lg">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3 class="text-[--text-main] text-2xl">Delete info?</h3>
+                        </div>
+
+                        <div class="flex justify-end mt-8">
+                            <button id="cancel-delete-btn"
+                                class="text-[--input-border-focus] text-md hover:bg-[--examples-btn-hover] py-2 px-3 rounded-3xl font-semibold">Cancel</button>
+                            <button id="confirm-delete-btn"
+                                class="text-[--input-border-focus] text-md hover:bg-[--examples-btn-hover] py-2 px-3 rounded-3xl font-semibold">Delete</button>
+                        </div>
+                    </div>
+
+                    <div id="deleteAllModal"
+                        class="bg-[--form-theme] pt-5 lg:w-[40%] md:w-[60%] sm:w-[80%] w-[90%] px-8 pb-6 rounded-2xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute hidden z-50 rounded-2xl shadow-lg">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3 class="text-[--text-main] text-2xl">Delete info?</h3>
+                        </div>
+                        <p class="text-[--sidebar-text] mb-4">Everything YOYO has saved about you and your
+                            preferences
+                            will be permanently deleted. You can still ask YOYO to save new info, unless you turn
+                            off
+                            this feature.</p>
+                        <div class="flex justify-end mt-8">
+                            <button id="confirm-delete-all"
+                                class="text-[--input-border-focus] text-md hover:bg-[--examples-btn-hover] py-2 px-3 rounded-3xl font-semibold">Delete
+                                all</button>
+                            <button id="cancel-delete-all"
+                                class="text-[--input-border-focus] text-md hover:bg-[--examples-btn-hover] py-2 px-3 rounded-3xl font-semibold">Cancel</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!------------------------------------------------->
+    <!-- Help Center -->
+    <div id="help_Data"
+        class="flex flex-col hidden  justify-start fixed top-[100px] rounded-2xl right-[10px] bg-[--bg-main] shadow-[0_1px_3px_0_rgba(60,64,67,0.3),_0_4px_8px_3px_rgba(60,64,67,0.15)]  lg:w-[23%] md:w-[40%] sm:w-[50%] w-[90%] h-[70vh] overflow-y-auto">
+
+        <!-- Sticky Header -->
+        <div class="sticky top-0 left-0 py-3 pb-8 w-full flex items-center justify-between bg-[--bg-main] z-10">
+            <p class="text-2xl text-[--text-main] text-center w-full">Help</p>
+            <button id="help_close" class="absolute right-4 top-3">
+                <i class="fa-solid fa-xmark text-2xl text-[--text-main]"></i>
+            </button>
+        </div>
+
+        <!-- Scrollable Content -->
+        <div class="text-[--text-main] space-y-3 pb-4 text-left">
+            <h6 class="text-[16px] text-[--text-main] ps-4">Popular help resources</h6>
+
+
+            <div class="flex items-center gap-3 hover:bg-[--dropdown-hover] py-2 px-4 cursor-pointer">
+                <div
+                    class="w-[40px] h-[40px] min-h-[40px] min-w-[40px] rounded-full bg-[--examples-btn-hover]  flex justify-center items-center ">
+                    <i class="fa-regular fa-file-lines text-[--add-btn]"></i>
+                </div>
+                <span class="text-[16px] text-[--text-main]">Manage & delete your YOYO Apps activity</span>
+            </div>
+            <div class="flex items-center gap-3 hover:bg-[--dropdown-hover] py-2 px-4 cursor-pointer">
+                <div
+                    class="w-[40px] h-[40px] min-h-[40px] min-w-[40px] rounded-full bg-[--examples-btn-hover] flex justify-center items-center">
+                    <i class="fa-regular fa-file-lines text-[--add-btn]"></i>
+                </div>
+                <span class="text-[16px] text-[--text-main]">Use YOYO Apps</span>
+            </div>
+            <div class="flex items-center gap-3 hover:bg-[--dropdown-hover] py-2 px-4 cursor-pointer">
+                <div
+                    class="w-[40px] h-[40px] min-h-[40px] min-w-[40px] rounded-full bg-[--examples-btn-hover] flex justify-center items-center">
+                    <i class="fa-regular fa-file-lines text-[--add-btn]"></i>
+                </div>
+                <span class="text-[16px] text-[--text-main]">Use & manage apps in YOYO</span>
+            </div>
+            <div class="flex items-center gap-3 hover:bg-[--dropdown-hover] py-2 px-4 cursor-pointer">
+                <div
+                    class="w-[40px] h-[40px] min-h-[40px] min-w-[40px] rounded-full bg-[--examples-btn-hover] flex justify-center items-center">
+                    <i class="fa-regular fa-file-lines text-[--add-btn]"></i>
+                </div>
+                <span class="text-[16px] text-[--text-main]">Find & manage your recent chats in YOYO Apps</span>
+            </div>
+            <div class="flex items-center gap-3 hover:bg-[--dropdown-hover] py-2 px-4 cursor-pointer">
+                <div
+                    class="w-[40px] h-[40px] min-h-[40px] min-w-[40px] rounded-full bg-[--examples-btn-hover] flex justify-center items-center">
+                    <i class="fa-regular fa-file-lines text-[--add-btn]"></i>
+                </div>
+                <span class="text-[16px] text-[--text-main]">Where you can use the YOYO web app</span>
+            </div>
+
+
+            <a href="" class="text-[14px] text-[--add-btn] w-full block hover:bg-[--bg-hover] py-4 px-10">Visit help
+                forum <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+
+            <div class="bg-[--dropdown-hover] py-3 mx-5 rounded-full flex items-center px-5 cursor-pointer">
+                <i class="fa-solid fa-magnifying-glass me-3"></i>
+                <input type="search" class="w-full bg-transparent outline-none border-0 cursor-pointer">
+            </div>
+
+            <div class="py-4 border-t-[8px] border-b-[8px] border-[--border-color]-500">
+                <p class="text-[--text-main] ps-4">Need more help?</p>
+                <div class="flex items-center gap-3 hover:bg-[--dropdown-hover] py-2 px-4 mt-3  cursor-pointer">
+                    <div
+                        class="w-[40px] h-[40px] min-h-[40px] min-w-[40px] rounded-full bg-[--examples-btn-hover] flex justify-center items-center">
+                        <i class="fa-solid fa-message text-[--add-btn]"></i>
+                    </div>
+                    <div>
+                        <p class="text-[--text-main] text-[16px]">Ask the Help Community</p>
+                        <span class="text-[--text-muted] text-[16px]">Get answers from community experts</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="flex items-center gap-3 hover:bg-[--dropdown-hover] py-2 px-4 mt-3  cursor-pointer">
+                <div
+                    class="w-[40px] h-[40px] min-h-[40px] min-w-[40px] rounded-full bg-[--examples-btn-hover] flex justify-center items-center">
+                    <i class="fa-solid fa-circle-exclamation text-[--add-btn]"></i>
+                </div>
+                <p class="text-[16px] text-[--add-btn] font-medium">Report a problem</p>
+            </div>
+        </div>
+    </div>
+    <!-- *****help js***** -->
+    <script>
+        const help_Data = document.getElementById('help_Data');
+        const help_close = document.getElementById('help_close');
+        const open_help_center = document.getElementById('open_help_center');
+
+
+
+        open_help_center.addEventListener('click', () =>
+            help_Data.classList.remove('hidden')
+        );
+        help_close.addEventListener('click', () =>
+            help_Data.classList.add('hidden')
+        );
+    </script>
+    <!---------------------------------------------->
+    <!---------------------------------------------->
+    <!-- ************Feedback********* -->
+
+    <div id="feedback-data"
+        class="flex z-50 flex-col hidden justify-between fixed top-0 right-0 rounded-l-2xl bg-[#1F1F1F] shadow-[0_1px_3px_0_rgba(60,64,67,0.3),_0_4px_8px_3px_rgba(60,64,67,0.15)] lg:w-[28%] md:w-[40%] sm:w-[50%] w-[90%] h-[100vh] overflow-hidden">
+
+        <!-- Sticky Header -->
+        <div
+            class="sticky top-0 left-0 py-5 px-4 w-full flex items-center justify-between bg-[#1F1F1F] shadow-[0_1px_4px_rgba(0,0,0,0.6)] z-10">
+            <p class="text-lg text-white w-full">Send feedback to YOYO</p>
+            <button id="feedback_close"
+                class="absolute right-4 w-[50px] h-[50px] rounded-full top-3 hover:bg-[#303134]">
+                <i class="fa-solid fa-xmark text-2xl text-white"></i>
+            </button>
+        </div>
+
+        <!-- Scrollable Content + Bottom -->
+        <div class="flex flex-col justify-between h-full overflow-y-auto">
+            <div class="space-y-3 text-white p-4 text-left">
+                <h6 class="text-[14px]">Describe your feedback (required)</h6>
+
+                <textarea name="feedback_message" id="feedback_message"
+                    placeholder="Tell us what prompted this feedback..." rows="4"
+                    class="w-full bg-transparent border rounded p-2 outline-none focus:ring-2 focus:ring-[#8AB4F8] focus:border-0 text-[16px] text-white"></textarea>
+
+
+                <span class="text-[12px]">Please don’t include any sensitive information <i
+                        class="fa-regular fa-circle-question"></i></span>
+
+                <p class="text-[16px]">A screenshot will help us better understand your feedback.</p>
+
+                <div
+                    class="w-full border text-center text-[#7cacf8] rounded-md py-2 hover:border-[#7cacf8] hover:bg-[#2A3039] cursor-pointer">
+                    <p class="text-[15px]"><i class="fa-solid fa-desktop"></i> Capture screenshot</p>
+                </div>
+            </div>
+
+            <!-- Fixed Bottom Section -->
+            <div class="mt-auto  bg-[#1F1F1F] ">
+                <div class="flex items-center gap-2 mb-4 px-4">
+                    <input type="checkbox" name="checkbox" id="checkbox"
+                        class="w-5 h-5 bg-[#1F1F1F] accent-[#7CACF8] cursor-pointer border rounded" />
+                    <label for="checkbox" class="text-white cursor-pointer">
+                        We may email you for more information or updates
+                    </label>
+                </div>
+
+                <p class="text-[14px] text-white mb-4 px-4">
+                    Some account and system information may be sent to YOYO. We will use it to fix problems and
+                    improve
+                    our services, subject to our Privacy Policy and Terms of Service. We may email you for more
+                    information
+                    or updates. Go to Legal Help to ask for content changes for legal reasons.
+                </p>
+
+                <div class="text-end shadow-[0_-4px_6px_rgba(0,0,0,0.15)] mt-2 p-4">
+                    <button id="sendBtn" disabled class="bg-[#373737] py-2 px-6 rounded-lg text-white text-[16px]">
+                        Send
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
