@@ -261,6 +261,7 @@ redoBtn.addEventListener('click', () => {
 });
 
 
+
 const icon = document.getElementById('infoIcon');
 const tooltip = document.getElementById('tooltip');
 
@@ -277,16 +278,13 @@ document.addEventListener('click', (e) => {
 
 
 
-window.addEventListener('beforeunload', () => {
-    localStorage.removeItem('editingGem');
-});
-
+// window.addEventListener('beforeunload', () => {
+//     localStorage.removeItem('editingGem');
+// });
 
 const myGemsForm = document.getElementById('myGemsForm');
 const nameInput = document.getElementById('nameInput');
 const nameTextarea = document.getElementById('nameTextarea');
-
-
 
 const editingGem = JSON.parse(localStorage.getItem('editingGem'));
 const isCopy = localStorage.getItem('copiedGem') === 'true';
@@ -295,25 +293,21 @@ const isCopy = localStorage.getItem('copiedGem') === 'true';
 
 
 const handleGemsStore = async (event) => {
-    event.preventDefault(); // <-- prevents page refresh by default
-
-
+    event.preventDefault(); 
+    
     const gemsName = nameInput.value.trim();
     const gemsDescription = nameTextarea.value.trim();
     const gemsData = { gemsName, gemsDescription };
+    
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-    
-    
-
 
     try {
         let response;
 
         if (editingGem && !isCopy) {
             // ✅ Edit mode → PUT
-            response = await fetch(`http://127.0.0.1:8000/new_gem/${editingGem.id}`, {
-                method: 'PUT',
+            response = await fetch(`http://127.0.0.1:8000/updateGem/${editingGem.id}`, {
+               method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': csrfToken
@@ -360,10 +354,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const saveBtn = document.getElementById('saveButton');
 
         nameInputEl.value = isCopy
-            ? `Copy of ${editingGem.gemsName || ''}`.trim()
-            : editingGem.gemsName || '';
+            ? `Copy of ${editingGem.name || ''}`.trim()
+            : editingGem.name || '';
 
-        nameTextareaEl.value = editingGem.message || editingGem.gemsDescription || '';
+        nameTextareaEl.value = editingGem.description  || editingGem.gemsDescription || '';
         gemTitleEl.textContent = nameInputEl.value;
         saveBtn.disabled = false;
         previewSectionChat.style.display = "none"

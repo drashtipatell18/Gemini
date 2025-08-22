@@ -26,4 +26,6 @@ Route::get('writingEditor', [HomeController::class, 'writingEditor'])->name('wri
 
 
 Route::post('new_gemStore', [HomeController::class, 'NewGemStore'])->name('new_gemStore');
+Route::post('updateGem/{id}', [HomeController::class, 'updateGem']);
 Route::get('gemJson', [HomeController::class, 'gemJson'])->name('gemJson');
+Route::get('/get_gem/{id}', [HomeController::class, 'getGemById']);

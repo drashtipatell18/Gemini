@@ -596,20 +596,31 @@
         }
 }
 
-        async function handleEditgem(id) {
-            console.log("Edit ID:", id); // Add this
-            const response = await fetch('http://127.0.0.1:8000/gemJson');
-            console.log("asdadaasdadad",response);
-            const gemsdata = await response.json();
+    async function handleEditgem(id) {
+        console.log("Edit ID:", id);
 
-            const gem = gemsdata.find((v) => v.id === id);
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/get_gem/${id}`);
 
-            localStorage.setItem('editingGem', JSON.stringify(gem));
+            if (!response.ok) {
+                throw new Error('Failed to fetch gem data');
+            }
 
+            const gemData = await response.json();
+
+            console.log("Fetched gem data:", gemData); // <--- Check this in console
+
+            // Store full gem data
+            localStorage.setItem('editingGem', JSON.stringify(gemData));
             localStorage.removeItem('copiedGem');
 
-            window.location.href = 'new_gem';
+            // Redirect to edit page
+            window.location.href = 'new_gem'; // or 'new_gem.html' if needed
+        } catch (error) {
+            console.error('Error fetching gem data:', error);
         }
+    }
+
 
 
         fetchGemsData();

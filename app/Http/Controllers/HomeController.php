@@ -37,6 +37,38 @@ class HomeController extends Controller
         return response()->json(NewGem::all());
     }
 
+    public function getGemById($id)
+    {
+        // Find gem by id or return 404
+        $gem = NewGem::find($id);
+
+        if (!$gem) {
+            return response()->json(['message' => 'Gem not found'], 404);
+        }
+
+        return response()->json($gem);
+    }
+
+    public function updateGem(Request $request, $id)
+    {
+        $gem = NewGem::find($id);
+
+
+        if (!$gem) {
+            return response()->json(['message' => 'Gem not found'], 404);
+        }
+
+        // ✅ Use correct fields: 'title' and 'description'
+      $gem->update([
+        'user_id' => 1,
+        'name' => $request->input('gemsName'),
+        'description' => $request->input('gemsDescription'),
+    ]);
+
+        return response()->json(['message' => 'Gem updated successfully', 'data' => $gem]);
+    }
+
+
     public function NewGem()
     {
         return view('NewGem');
