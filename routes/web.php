@@ -18,4 +18,4 @@ Route::get('savedInfo', [HomeController::class, 'SavedInfo'])->name('savedInfo')
 Route::get('explore_gem', [HomeController::class, 'ExploreGem'])->name('explore_gem');
 Route::get('new_gem', [HomeController::class, 'NewGem'])->name('new_gem');
 Route::get('career_guide', [HomeController::class, 'CareerGuide'])->name('career_guide');
-Route::get('career_guide', [HomeController::class, 'CareerGuide'])->name('career_guide');
+Route::get('chess_champ', [HomeController::class, 'chessChamp'])->name('chess_champ');

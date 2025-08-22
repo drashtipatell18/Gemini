@@ -38,4 +38,9 @@ class HomeController extends Controller
     {
         return view('Career_guide');
     }
+
+    public function chessChamp()
+    {
+        return view('Chess_champ');
+    }
 }
