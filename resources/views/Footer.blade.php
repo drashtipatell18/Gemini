@@ -246,35 +246,54 @@
         }
 
 
-        function signOutAllAccounts() {
-            localStorage.removeItem('login');
-            localStorage.removeItem('accounts');
-            window.location.href = '/login'; // or wherever your login page is
+    function signOutAllAccounts() {
+        localStorage.removeItem('login');
+        localStorage.removeItem('accounts');
+        localStorage.removeItem('user'); // Also remove user info if stored
+
+        // Update the UI
+        document.getElementById('account').innerHTML = `
+            <button
+                class="bg-[--add-btn] text-[--add-btn-text] font-bold py-2 px-4 rounded-lg"
+                onclick="handleRedirectLogin()">
+                Login
+            </button>`;
+
+        document.getElementById('yoyo-user-name').innerHTML = `
+            <h1 class="text-3xl bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">
+                <span class="text-[--text-main] ">Meet</span> YOYO.
+                <h1 class="text-3xl text-[--text-main]">your personal AI assistant</h1>
+            </h1>
+        `;
+
+        // Optional: hide any personalized divs
+        document.getElementById('greeting-div')?.classList.remove('hidden');
+
+        // Redirect to homepage or login
+        window.location.href = '/';
+    }
+
+
+      function handleRemoveLogin() {
+        const current = JSON.parse(localStorage.getItem('login'));
+        let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+
+        if (current) {
+            accounts = accounts.filter(acc => acc.email !== current.email);
+            localStorage.setItem('accounts', JSON.stringify(accounts));
         }
 
+        localStorage.removeItem('user');
+        localStorage.removeItem('login');
 
-
-        function handleRemoveLogin() {
-            const current = JSON.parse(localStorage.getItem('login'));
-            let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-
-            if (current) {
-                // Remove current user from saved list
-                accounts = accounts.filter(acc => acc.email !== current.email);
-                localStorage.setItem('accounts', JSON.stringify(accounts));
-            }
-
-            // Set next user as login if available
-            if (accounts.length > 0) {
-                const nextUser = accounts[0]; // First saved user
-                localStorage.setItem('login', JSON.stringify(nextUser));
-                window.location.href = '/'; // Auto redirect to app
-            } else {
-                // No user left, go to login page
-                localStorage.removeItem('login');
-                window.location.href = '/login';
-            }
+        if (accounts.length > 0) {
+            const nextUser = accounts[0];
+            localStorage.setItem('login', JSON.stringify(nextUser));
+            window.location.href = '/';
+        } else {
+            window.location.href = '/';
         }
+    }
 
 
 
@@ -301,6 +320,8 @@
             }
         }
     </script>
+
+
 
 
     <script>
