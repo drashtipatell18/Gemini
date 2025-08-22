@@ -301,25 +301,32 @@ const handleGemsStore = async (event) => {
     const gemsName = nameInput.value.trim();
     const gemsDescription = nameTextarea.value.trim();
     const gemsData = { gemsName, gemsDescription };
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    
+    
+
 
     try {
         let response;
 
         if (editingGem && !isCopy) {
             // ✅ Edit mode → PUT
-            response = await fetch(`http://localhost:8080/newGems/${editingGem.id}`, {
+            response = await fetch(`http://127.0.0.1:8000/new_gem/${editingGem.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
                 },
                 body: JSON.stringify(gemsData),
             });
         } else {
             // ✅ New or copied → POST
-            response = await fetch('http://localhost:8080/newGems', {
+            response = await fetch('http://127.0.0.1:8000/new_gemStore', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
                 },
                 body: JSON.stringify(gemsData),
             });

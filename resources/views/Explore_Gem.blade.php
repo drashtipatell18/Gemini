@@ -520,71 +520,86 @@
             return brightness > 150 ? "#000000" : "#FFFFFF";
         }
 
-        async function fetchGemsData() {
-            const showGems = document.getElementById("showGems");
+       async function fetchGemsData() {
+        const showGems = document.getElementById("showGems");
 
-            try {
-                const response = await fetch('http://localhost:8080/newGems');
-                const gemsdata = await response.json();
+        try {
+            const response = await fetch('http://127.0.0.1:8000/gemJson');
+            const gemsdata = await response.json();
 
-                showGems.innerHTML = "";
+            showGems.innerHTML = "";
 
-                if (gemsdata && gemsdata.length > 0) {
-                    gemsdata.forEach((v, i) => {
-                        const bgColor = getColorFromPalette(v.gemsName || "default");
-                        const textColor = getContrastColor(bgColor);
+            if (gemsdata && gemsdata.length > 0) {
+                gemsdata.forEach((v, i) => {
+                    console.log("ID:", v.id); // Debug log
+                    const bgColor = getColorFromPalette(v.name || "default");
+                    const textColor = getContrastColor(bgColor);
 
-                        showGems.innerHTML += `
+                    showGems.innerHTML += `
                         <div class="rounded-xl p-4 x-gem text-[var(--text-muted)] flex justify-between items-center bg-[var(--your-gems-bg)] hover:bg-[--gems-bg-hover]">
                             <div class="flex items-center gap-4">
                                 <button
                                     class="w-8 h-8 rounded-full flex items-center justify-center font-medium"
                                     style="background-color: ${bgColor}; color: ${textColor};">
-                                    ${v.gemsName?.charAt(0).toUpperCase() || "U"}
+                                    ${v.name?.charAt(0).toUpperCase() || "U"}
                                 </button>
-                                <div class="flex flex-col gap-2 ">
-                                    <p class="text-[12px] font-medium text-[--text-main]">${v.gemsName || "No Name"}</p>
-                                    <span title="${v.gemsDescription || ''}" class="text-[12px]  text-[--text-muted] truncate overflow-hidden whitespace-nowrap w-[100px] sm:max-w-[160px] md:max-w-[200px]">
-                                        ${v.gemsDescription || ""}
+                                <div class="flex flex-col gap-2">
+                                    <p class="text-[12px] font-medium text-[--text-main]">${v.name || "No Name"}</p>
+                                    <span title="${v.description || ''}" class="text-[12px] text-[--text-muted] truncate overflow-hidden whitespace-nowrap w-[100px] sm:max-w-[160px] md:max-w-[200px]">
+                                        ${v.description || ""}
                                     </span>
-
                                 </div>
                             </div>
                             <div class="flex items-center gap-2">
-                                <button onclick=handleEditgem('${v.id}') class="hover:bg-[--model-hover] w-10 h-10 rounded-full flex items-center justify-center text-[--text-muted] font-medium">
+                                <button onclick="handleEditgem('${v.id}')" class="hover:bg-[--model-hover] w-10 h-10 rounded-full flex items-center justify-center text-[--text-muted] font-medium">
                                     <i class="fa-solid fa-pen"></i>
                                 </button>
                                 <div class="relative gemx-wrapper">
                                     <button onclick="gemxToggleMenu('${v.id}')" class="hover:bg-[--model-hover] w-10 h-10 rounded-full flex items-center justify-center text-[--text-muted] font-medium gemx-menu-btn">
-                                         <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
                                     <div id="gemx-menu-${v.id}" class="gemx-dropdown absolute right-0 bottom-full mb-2 w-56 rounded-xl shadow-xl bg-[--bg-main] text-[--text-main] hidden z-10">
                                         <ul class="py-1 text-sm">
-                                            <li> <a  href="Gemini.html" class="flex cursor-pointer items-center gap-2 px-4 py-4 text-[16px] hover:bg-[--model-hover]"><i class="fa-regular fa-comment text-[20px]"></i> New chat </a></li>
-                                            <li > <a onclick='copyGem(${JSON.stringify(v)})' class="flex cursor-pointer items-center gap-2 px-4 py-4 text-[16px] hover:bg-[--model-hover]"><i class="fa-regular fa-copy text-[20px]"></i> Make a copy </a></li>
-                                            <li > <a onclick="handleDeleteGem('${v.id}')" class="flex cursor-pointer items-center gap-2 px-4 py-4 text-[16px] hover:bg-[--model-hover] "><i class="fa-regular fa-trash-can text-[20px]"></i> Delete </a></li>
+                                            <li>
+                                                <a href="Gemini.html" class="flex cursor-pointer items-center gap-2 px-4 py-4 text-[16px] hover:bg-[--model-hover]">
+                                                    <i class="fa-regular fa-comment text-[20px]"></i> New chat
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onclick='copyGem(${JSON.stringify(v)})' class="flex cursor-pointer items-center gap-2 px-4 py-4 text-[16px] hover:bg-[--model-hover]">
+                                                    <i class="fa-regular fa-copy text-[20px]"></i> Make a copy
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onclick="handleDeleteGem('${v.id}')" class="flex cursor-pointer items-center gap-2 px-4 py-4 text-[16px] hover:bg-[--model-hover]">
+                                                    <i class="fa-regular fa-trash-can text-[20px]"></i> Delete
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     `;
-                    });
-                } else {
-                    showGems.innerHTML = `
+                });
+            } else {
+                showGems.innerHTML = `
                     <div class="rounded-xl p-6 text-center x-gem text-[var(--text-muted)] flex justify-center items-center bg-[var(--your-gems-bg)]">
                         <i class="fa-regular fa-gem text-xl text-[var(--user-bubble-text)]"></i>
                         <p class="ml-2 text-lg your-gems-message">The Gems you create will appear here</p>
-                    </div>`;
-                }
-            } catch (err) {
-                console.error("Error fetching gems:", err);
-                showGems.innerHTML = `<p class="text-red-500">Error loading gems</p>`;
+                    </div>
+                `;
             }
+        } catch (err) {
+            console.error("Error fetching gems:", err);
+            showGems.innerHTML = `<p class="text-red-500">Error loading gems</p>`;
         }
+}
 
         async function handleEditgem(id) {
-            const response = await fetch('http://localhost:8080/newGems');
+            console.log("Edit ID:", id); // Add this
+            const response = await fetch('http://127.0.0.1:8000/gemJson');
+            console.log("asdadaasdadad",response);
             const gemsdata = await response.json();
 
             const gem = gemsdata.find((v) => v.id === id);
@@ -593,7 +608,7 @@
 
             localStorage.removeItem('copiedGem');
 
-            window.location.href = 'NewGem.html';
+            window.location.href = 'new_gem';
         }
 
 

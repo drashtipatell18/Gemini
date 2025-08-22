@@ -23,3 +23,7 @@ Route::get('brainstormer', [HomeController::class, 'brainstomer'])->name('brains
 Route::get('coding_partner', [HomeController::class, 'codingPartner'])->name('coding_partner');
 Route::get('learning_coach', [HomeController::class, 'learningCoach'])->name('learning_coach');
 Route::get('writingEditor', [HomeController::class, 'writingEditor'])->name('writingEditor');
+
+
+Route::post('new_gemStore', [HomeController::class, 'NewGemStore'])->name('new_gemStore');
+Route::get('gemJson', [HomeController::class, 'gemJson'])->name('gemJson');
