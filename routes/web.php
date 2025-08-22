@@ -14,3 +14,7 @@ Route::post('/signupStore', [LoginController::class, 'SignupStore'])->name('sign
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('upgrade', [HomeController::class, 'Upgrade'])->name('upgrade');
 Route::get('public_links', [HomeController::class, 'PublicLinks'])->name('public_links');
+Route::get('savedInfo', [HomeController::class, 'SavedInfo'])->name('savedInfo');
+Route::get('explore_gem', [HomeController::class, 'ExploreGem'])->name('explore_gem');
+Route::get('new_gem', [HomeController::class, 'NewGem'])->name('new_gem');
+Route::get('career_guide', [HomeController::class, 'CareerGuide'])->name('career_guide');
