@@ -278,9 +278,9 @@ document.addEventListener('click', (e) => {
 
 
 
-// window.addEventListener('beforeunload', () => {
-//     localStorage.removeItem('editingGem');
-// });
+window.addEventListener('beforeunload', () => {
+    localStorage.removeItem('editingGem');
+});
 
 const myGemsForm = document.getElementById('myGemsForm');
 const nameInput = document.getElementById('nameInput');
@@ -335,7 +335,7 @@ const handleGemsStore = async (event) => {
 
 
             // ✅ Only now refresh the page after successful save
-            location.reload();
+            window.location.href = 'explore_gem';
         } else {
             console.error("Failed to submit gems data.");
         }

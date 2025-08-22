@@ -107,7 +107,7 @@ class HomeController extends Controller
         $gem = new NewGem();
 
         // Assign user_id only if user is logged in
-        $gem->user_id = Auth::check() ? Auth::id() : null;
+        $gem->user_id = 1;
 
         $gem->name = $request->input('gemsName');
         $gem->description = $request->input('gemsDescription');
