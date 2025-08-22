@@ -53,4 +53,12 @@ class HomeController extends Controller
     {
         return view('Coding_partner');
     }
+    public function writingEditor()
+    {
+        return view('Writing_editor');
+    }
+    public function learningCoach()
+    {
+        return view('Learning_coach');
+    }
 }
