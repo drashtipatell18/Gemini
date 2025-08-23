@@ -565,11 +565,7 @@
                                                     <i class="fa-regular fa-comment text-[20px]"></i> New chat
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a onclick='copyGem(${JSON.stringify(v)})' class="flex cursor-pointer items-center gap-2 px-4 py-4 text-[16px] hover:bg-[--model-hover]">
-                                                    <i class="fa-regular fa-copy text-[20px]"></i> Make a copy
-                                                </a>
-                                            </li>
+                                        
                                             <li>
                                                 <a onclick="handleDeleteGem('${v.id}')" class="flex cursor-pointer items-center gap-2 px-4 py-4 text-[16px] hover:bg-[--model-hover]">
                                                     <i class="fa-regular fa-trash-can text-[20px]"></i> Delete
@@ -713,7 +709,8 @@
                     gemDeleteModal.classList.add('hidden');
                 }
                 currentDeleteId = null;
-                await Display();
+                location.reload();
+               
             } catch (error) {
                 console.error("Error deleting info:", error);
 
