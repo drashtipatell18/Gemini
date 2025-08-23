@@ -96,18 +96,18 @@
                     <div class="relative group inline-block">
                       
 
-                          <button id="profile-button"
-                            class="w-8 h-8 rounded-full flex items-center justify-center text-white font-medium overflow-hidden"
-                            style="
-                                background-image: url('{{ $user->profile_image ? asset('storage/profile_images/' . $user->profile_image) : '' }}');
-                                background-size: cover;
-                                background-position: center;
-                                background-color: {{ $user->profile_image ? 'transparent' : '#78909c' }};
-                            ">
-                            @if(!$user->profile_image)
-                                {{ strtoupper(substr($user->name, 0, 1)) }}
-                            @endif
-                        </button>
+                 <button id="profile-button"
+                    class="w-8 h-8 rounded-full flex items-center justify-center text-white font-medium overflow-hidden"
+                    style="
+                        background-image: url('{{ isset($user) && isset($user->profile_image) ? asset('storage/profile_images/' . $user->profile_image) : '' }}');
+                        background-size: cover;
+                        background-position: center;
+                        background-color: {{ isset($user) && isset($user->profile_image) && $user->profile_image ? 'transparent' : '#78909c' }};
+                    ">
+                    @if(!isset($user->profile_image) || !$user->profile_image)
+                        {{ isset($user->name) ? strtoupper(substr($user->name, 0, 1)) : '?' }}
+                    @endif
+                </button>
 
                         <div id='account-tooltips' class="absolute z-[999] right-0 mt-1 min-w-56 p-2 bg-[#3c4043e6] hidden group-hover:block rounded">
                         <h5 class="text-[13px] text-[#E8EAED] font-medium m-0">Google Account</h5>
@@ -138,23 +138,23 @@
                         <div class="px-4 py-4 flex flex-col items-center">
                         <div class="relative">
                            <div id="profile-circle"
-                                class="w-[75px] h-[75px] rounded-full mb-2 overflow-hidden cursor-pointer"
-                                style="
-                                    background-image: url('{{ $user->profile_image ? asset('storage/profile_images/' . $user->profile_image) : '' }}');
-                                    background-size: cover;
-                                    background-position: center;
-                                    background-color: {{ $user->profile_image ? 'transparent' : '#78909c' }};
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-                                    color: white;
-                                    font-size: 2rem;
-                                    font-weight: 500;
-                                ">
-                                @if(!$user->profile_image)
-                                    {{ strtoupper(substr($user->name, 0, 1)) }}
-                                @endif
-                            </div>
+            class="w-[75px] h-[75px] rounded-full mb-2 overflow-hidden cursor-pointer"
+            style="
+                background-image: url('{{ isset($user) && isset($user->profile_image) && $user->profile_image ? asset('storage/profile_images/' . $user->profile_image) : '' }}');
+                background-size: cover;
+                background-position: center;
+                background-color: {{ isset($user) && isset($user->profile_image) && $user->profile_image ? 'transparent' : '#78909c' }};
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 2rem;
+                font-weight: 500;
+            ">
+            @if(!isset($user->profile_image) || !$user->profile_image)
+                {{ isset($user->name) ? strtoupper(substr($user->name, 0, 1)) : '?' }}
+            @endif
+        </div>
                           <input type="file" id="profile-img-upload" style="display: none" accept="image/*">
 
                             <div class="w-6 h-6 bottom-[4px] left-[53px] absolute rounded-full items-center justify-center flex pointer-events-none"

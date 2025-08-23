@@ -214,9 +214,9 @@
     </div>
 
 
-    <!------------------------------------------------->
+     <!------------------------------------------------->
     <!-- Help Center -->
-  <div id="help_Data"
+    <div id="help_Data"
         class="flex flex-col hidden  justify-start fixed top-[100px] rounded-2xl right-[10px] bg-[--bg-main] shadow-[0_1px_3px_0_rgba(60,64,67,0.3),_0_4px_8px_3px_rgba(60,64,67,0.15)]  lg:w-[23%] md:w-[40%] sm:w-[50%] w-[90%] h-[70vh] overflow-y-auto">
 
         <!-- Sticky Header -->
@@ -301,7 +301,7 @@
             </div>
         </div>
     </div>
-
+    <!-- *****help js***** -->
     <script>
         const help_Data = document.getElementById('help_Data');
         const help_close = document.getElementById('help_close');
@@ -316,8 +316,9 @@
             help_Data.classList.add('hidden')
         );
     </script>
-
-     <!-- ************Feedback********* -->
+    <!---------------------------------------------->
+    <!---------------------------------------------->
+    <!-- ************Feedback********* -->
 
     <div id="feedback-data"
         class="flex z-50 flex-col hidden justify-between fixed top-0 right-0 rounded-l-2xl bg-[#1F1F1F] shadow-[0_1px_3px_0_rgba(60,64,67,0.3),_0_4px_8px_3px_rgba(60,64,67,0.15)] lg:w-[28%] md:w-[40%] sm:w-[50%] w-[90%] h-[100vh] overflow-hidden">
@@ -325,7 +326,7 @@
         <!-- Sticky Header -->
         <div
             class="sticky top-0 left-0 py-5 px-4 w-full flex items-center justify-between bg-[#1F1F1F] shadow-[0_1px_4px_rgba(0,0,0,0.6)] z-10">
-            <p class="text-lg text-white w-full">Send feedback to Google</p>
+            <p class="text-lg text-white w-full">Send feedback to YOYO</p>
             <button id="feedback_close"
                 class="absolute right-4 w-[50px] h-[50px] rounded-full top-3 hover:bg-[#303134]">
                 <i class="fa-solid fa-xmark text-2xl text-white"></i>
@@ -364,7 +365,7 @@
                 </div>
 
                 <p class="text-[14px] text-white mb-4 px-4">
-                    Some account and system information may be sent to Google. We will use it to fix problems and
+                    Some account and system information may be sent to YOYO. We will use it to fix problems and
                     improve
                     our services, subject to our Privacy Policy and Terms of Service. We may email you for more
                     information
@@ -380,5 +381,39 @@
             </div>
         </div>
     </div>
+
+    <!-- feedback js -->
+    <script>
+        const feedback_message = document.getElementById("feedback_message");
+        const sendBtn = document.getElementById("sendBtn");
+        const feedback_close = document.getElementById("feedback_close");
+        const feedback_open = document.getElementById("feedback_open");
+        const feedback_data = document.getElementById("feedback-data");
+
+        feedback_open.addEventListener('click', () =>
+            feedback_data.classList.remove('hidden')
+        );
+        feedback_close.addEventListener('click', () =>
+            feedback_data.classList.add('hidden')
+        );
+
+        feedback_message.addEventListener("input", function () {
+            if (feedback_message.value.trim().length > 0) {
+                sendBtn.disabled = false;
+                sendBtn.classList.remove("bg-[#373737]", "text-white");
+                sendBtn.classList.add("bg-[#7CACF8]", "text-[#062E6F]");
+            } else {
+                sendBtn.disabled = true;
+                sendBtn.classList.remove("bg-[#7CACF8]", "text-[#062E6F]");
+                sendBtn.classList.add("bg-[#373737]", "text-white");
+            }
+        });
+    </script>
+    <!---------------------------------------------->
+
+
+
+
+
 </body>
 </html>
