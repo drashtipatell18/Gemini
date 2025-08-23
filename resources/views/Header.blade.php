@@ -19,7 +19,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/Yoyo.css') }}">
     <link rel="stylesheet" href="{{ asset('css/SavedInfo.css') }}">
-    
+
 </head>
 
 <body>
@@ -79,11 +79,11 @@
                         <div class="dropdown-menu" id="dropdownMenu">
                             <ul class="pb-2">
                                 <li>
-                                    <a href="" class="w-[100%] items-center flex gap-5">
+                                    <a href="{{ route('saveinfo')}}" class="w-[100%] items-center flex gap-5">
                                         <span class="material-symbols-outlined"> person </span>
                                         Saved info
                                     </a>
-                                   
+
                                 </li>
                                 <li>
                                     <a href="{{ route('public_links') }}" class="w-[100%] items-center flex gap-5">
@@ -204,7 +204,7 @@
                     <a href="{{ route('upgrade') }}"
                         class="h-9 block cursor-pointer rounded-md flex items-center justify-center text-xs font-semibold px-6 mr-3"
                         style="background-color: var(--sidebar-hover);">
-                        
+
                         Upgrade
                     </a>
                     <div id="account"></div>

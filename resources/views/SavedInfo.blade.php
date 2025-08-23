@@ -1,7 +1,5 @@
-
 @extends('layouts.main')
 @section('content')
-
     <style>
         .SavedInfo-chat-content-wrapper {
             max-width: 100%;
@@ -16,8 +14,7 @@
         <div class="backdrop" id="backdrop"></div>
         <div class="gemini-data savedInfo-gemini-data">
             <div class="main-chat-area">
-                <div class="chat-content-wrapper SavedInfo-chat-content-wrapper"
-                    style="background-color: var(--bg-main);">
+                <div class="chat-content-wrapper SavedInfo-chat-content-wrapper" style="background-color: var(--bg-main);">
                     <div class="container relative">
                         <div class="info">
                             <div class="flex items-center justify-between">
@@ -209,7 +206,8 @@
             </div>
 
 
-            <a href="" class="text-[14px] text-[--add-btn] w-full block hover:bg-[--bg-hover] py-4 px-10">Visit help
+            <a href="" class="text-[14px] text-[--add-btn] w-full block hover:bg-[--bg-hover] py-4 px-10">Visit
+                help
                 forum <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
 
             <div class="bg-[--dropdown-hover] py-3 mx-5 rounded-full flex items-center px-5 cursor-pointer">
@@ -267,8 +265,7 @@
         <div
             class="sticky top-0 left-0 py-5 px-4 w-full flex items-center justify-between bg-[#1F1F1F] shadow-[0_1px_4px_rgba(0,0,0,0.6)] z-10">
             <p class="text-lg text-white w-full">Send feedback to YOYO</p>
-            <button id="feedback_close"
-                class="absolute right-4 w-[50px] h-[50px] rounded-full top-3 hover:bg-[#303134]">
+            <button id="feedback_close" class="absolute right-4 w-[50px] h-[50px] rounded-full top-3 hover:bg-[#303134]">
                 <i class="fa-solid fa-xmark text-2xl text-white"></i>
             </button>
         </div>
@@ -278,8 +275,8 @@
             <div class="space-y-3 text-white p-4 text-left">
                 <h6 class="text-[14px]">Describe your feedback (required)</h6>
 
-                <textarea name="feedback_message" id="feedback_message"
-                    placeholder="Tell us what prompted this feedback..." rows="4"
+                <textarea name="feedback_message" id="feedback_message" placeholder="Tell us what prompted this feedback..."
+                    rows="4"
                     class="w-full bg-transparent border rounded p-2 outline-none focus:ring-2 focus:ring-[#8AB4F8] focus:border-0 text-[16px] text-white"></textarea>
 
 
@@ -321,5 +318,4 @@
             </div>
         </div>
     </div>
-
 @endsection

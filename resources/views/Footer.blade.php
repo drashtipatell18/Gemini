@@ -24,6 +24,8 @@
 
 <body>
     <script src="{{ asset('JS/Gemini.js') }}"></script>
+    <script src="{{ asset('JS/SavedInfo.js') }}"></script>
+    <script src="{{ asset('JS/index.js') }}"></script>
     <script>
         const feedback_message = document.getElementById("feedback_message");
         const sendBtn = document.getElementById("sendBtn");
