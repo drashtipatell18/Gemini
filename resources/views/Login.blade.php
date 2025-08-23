@@ -95,7 +95,7 @@
 
 
             <div class="text-right mt-1">
-                <a href="forgotPassword.html" class="text-sm text-[--add-btn] hover:underline">Forgot password?</a>
+                <a href="{{ route('forgotPassword')}}" class="text-sm text-[--add-btn] hover:underline">Forgot password?</a>
             </div>
 
 
