@@ -561,7 +561,7 @@
                                     <div id="gemx-menu-${v.id}" class="gemx-dropdown absolute right-0 bottom-full mb-2 w-56 rounded-xl shadow-xl bg-[--bg-main] text-[--text-main] hidden z-10">
                                         <ul class="py-1 text-sm">
                                             <li>
-                                                <a href="Gemini.html" class="flex cursor-pointer items-center gap-2 px-4 py-4 text-[16px] hover:bg-[--model-hover]">
+                                                <a href="{{ route('index') }}" class="flex cursor-pointer items-center gap-2 px-4 py-4 text-[16px] hover:bg-[--model-hover]">
                                                     <i class="fa-regular fa-comment text-[20px]"></i> New chat
                                                 </a>
                                             </li>
@@ -686,21 +686,24 @@
 
                     confirmDeleteBtn.replaceWith(confirmDeleteBtn.cloneNode(true));
                     document.getElementById('confirm-delete-gem').addEventListener('click', async () => {
+                        
                         await handleDeleteConfirmed();
                     });
                 }
             }
         };
 
-
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         const handleDeleteConfirmed = async () => {
             if (!currentDeleteId) return;
 
             try {
-                const response = await fetch('http://localhost:8080/newGems/' + currentDeleteId, {
-                    method: "DELETE"
+                const response = await fetch('http://127.0.0.1:8000/get_gem/' + currentDeleteId, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    }
                 });
-
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }

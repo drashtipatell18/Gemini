@@ -68,6 +68,22 @@ class HomeController extends Controller
         return response()->json(['message' => 'Gem updated successfully', 'data' => $gem]);
     }
 
+    public function destroy($id)
+    {
+        $gem = NewGem::find($id);
+
+        if (!$gem) {
+            return response()->json(['message' => 'Gem not found'], 404);
+        }
+
+        try {
+            $gem->delete();
+            return response()->json(['message' => 'Gem deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error deleting gem', 'error' => $e->getMessage()], 500);
+        }
+    }
+
 
     public function NewGem()
     {
@@ -102,7 +118,7 @@ class HomeController extends Controller
         return view('Learning_coach');
     }
 
-   public function NewGemStore(Request $request)
+    public function NewGemStore(Request $request)
     {
         $gem = new NewGem();
 

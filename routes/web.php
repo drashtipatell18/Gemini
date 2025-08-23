@@ -29,3 +29,4 @@ Route::post('new_gemStore', [HomeController::class, 'NewGemStore'])->name('new_g
 Route::post('updateGem/{id}', [HomeController::class, 'updateGem']);
 Route::get('gemJson', [HomeController::class, 'gemJson'])->name('gemJson');
 Route::get('/get_gem/{id}', [HomeController::class, 'getGemById']);
+Route::delete('/get_gem/{id}', [HomeController::class, 'destroy']);
