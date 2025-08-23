@@ -11,7 +11,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('yoyo');
+         $user = Auth::user();
+        return view('yoyo',compact('user'));
     }
 
     public function Upgrade()

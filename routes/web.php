@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\ProfileController;
 
 
 Route::get('/login', [LoginController::class, 'Login'])->name('login');
@@ -31,6 +32,7 @@ Route::post('updateGem/{id}', [HomeController::class, 'updateGem']);
 Route::get('gemJson', [HomeController::class, 'gemJson'])->name('gemJson');
 Route::get('/get_gem/{id}', [HomeController::class, 'getGemById']);
 Route::delete('/get_gem/{id}', [HomeController::class, 'destroy']);
+Route::post('/upload-image', [ProfileController::class, 'uploadImage'])->name('user.uploadImage');
 
 // setting & help
 Route::get('/saveinfo', [SettingController::class, 'SaveInfo'])->name('saveinfo');

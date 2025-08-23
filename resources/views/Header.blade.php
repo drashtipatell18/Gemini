@@ -46,7 +46,7 @@
                     <div class="drawer" id="drawer">
                         <ul class="drawer-data ">
                             <li id="new-chat-button">
-                                <a href="" class="items-center flex gap-5"> <span
+                                <a href="{{ route('index') }}" class="items-center flex gap-5"> <span
                                         class="material-symbols-outlined">edit_square</span>
                                     <span>New Chat</span>
                                 </a>

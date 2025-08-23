@@ -1183,9 +1183,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Profile image upload
+        // Profile image upload
     const profileInput = document.getElementById("profile-img-upload");
     const profileCircle = document.getElementById("profile-circle");
+
+
     if (profileCircle && profileInput) {
         profileCircle.addEventListener("click", () => {
             profileInput.click();
@@ -1208,9 +1210,31 @@ document.addEventListener('DOMContentLoaded', function () {
                     profileButton.style.backgroundPosition = "center";
                 };
                 reader.readAsDataURL(file);
+
+                // Send via AJAX to Laravel
+                let formData = new FormData();
+                formData.append("profile_image", file);
+
+                fetch("/upload-image", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+                    },
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log("Image uploaded:", data.image_url);
+                    } else {
+                        alert("Upload failed!");
+                    }
+                })
+                .catch(err => console.error("Error:", err));
             }
         });
     }
+
 
     // Sidebar hover logic (if needed)
     if (mainContent && geminiData) {
