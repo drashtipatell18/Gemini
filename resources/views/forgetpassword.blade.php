@@ -69,17 +69,4 @@
             </p>
         </form>
     </div>
-    <script>
-        const theme = localStorage.getItem("theme");
-        if (theme === "dark") {
-            document.body.classList.add("dark");
-        } else {
-            document.body.classList.remove("dark");
-        }
-
-        // Placeholder submit behavior
-        document.getElementById("forgotForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            alert("If this email exists, a password reset link will be sent.");
-        });
-    </script>
+    

@@ -144,18 +144,6 @@
     </div>
 
     <script>
-        const theme = localStorage.getItem('theme')
-
-        console.log(theme);
-
-
-        if (theme === 'dark') {
-            document.body.classList.add('dark');
-        } else {
-            document.body.classList.remove('dark');
-        }
-
-
         const savedAccounts = JSON.parse(localStorage.getItem('accounts')) || [];
 
         if (savedAccounts.length > 0) {
