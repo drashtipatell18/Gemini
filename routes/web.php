@@ -37,4 +37,5 @@ Route::post('/upload-image', [ProfileController::class, 'uploadImage'])->name('u
 
 // setting & help
 Route::get('/saveinfo', [SettingController::class, 'SaveInfo'])->name('saveinfo');
+Route::post('/feedback', [SettingController::class, 'feedbackStore'])->name('feedback.store');
 

@@ -335,10 +335,19 @@
 
         <!-- Scrollable Content + Bottom -->
         <div class="flex flex-col justify-between h-full overflow-y-auto">
+        <form action="{{ route('feedback.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+            @if(session('success'))
+            <script>
+                window.addEventListener('DOMContentLoaded', () => {
+                    alert("{{ session('success') }}");
+                });
+            </script>
+            @endif
             <div class="space-y-3 text-white p-4 text-left">
                 <h6 class="text-[14px]">Describe your feedback (required)</h6>
 
-                <textarea name="feedback_message" id="feedback_message"
+                <textarea name="description" id="feedback_message"
                     placeholder="Tell us what prompted this feedback..." rows="4"
                     class="w-full bg-transparent border rounded p-2 outline-none focus:ring-2 focus:ring-[#8AB4F8] focus:border-0 text-[16px] text-white"></textarea>
 
@@ -348,10 +357,13 @@
 
                 <p class="text-[16px]">A screenshot will help us better understand your feedback.</p>
 
-                <div
-                    class="w-full border text-center text-[#7cacf8] rounded-md py-2 hover:border-[#7cacf8] hover:bg-[#2A3039] cursor-pointer">
-                    <p class="text-[15px]"><i class="fa-solid fa-desktop"></i> Capture screenshot</p>
-                </div>
+                <input type="file" name="image[]" id="screenshotInput" multiple accept="image/*" class="hidden">
+
+                 <label for="screenshotInput"
+            class="w-full border text-center text-[#7cacf8] rounded-md py-2 hover:border-[#7cacf8] hover:bg-[#2A3039] cursor-pointer block">
+            <p class="text-[15px]"><i class="fa-solid fa-desktop"></i> Capture screenshot</p>
+        </label>
+         <div id="screenshotPreview" class="flex gap-2 mt-2 flex-wrap"></div>
             </div>
 
             <!-- Fixed Bottom Section -->
@@ -373,12 +385,14 @@
                 </p>
 
                 <div class="text-end shadow-[0_-4px_6px_rgba(0,0,0,0.15)] mt-2 p-4">
-                    <button id="sendBtn" disabled class="bg-[#373737] py-2 px-6 rounded-lg text-white text-[16px]">
+                    <button type="submit" id="sendBtn" disabled class="bg-[#373737] py-2 px-6 rounded-lg text-white text-[16px]">
                         Send
                     </button>
 
                 </div>
             </div>
+
+        </form>
         </div>
     </div>
 
@@ -411,7 +425,25 @@
     </script>
     <!---------------------------------------------->
 
+    <script>
+        const screenshotInput = document.getElementById('screenshotInput');
+        const screenshotPreview = document.getElementById('screenshotPreview');
 
+        screenshotInput.addEventListener('change', function () {
+            screenshotPreview.innerHTML = ""; // clear existing previews
+
+            for (const file of screenshotInput.files) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement("img");
+                    img.src = e.target.result;
+                    img.classList.add("w-20", "h-20", "object-cover", "rounded");
+                    screenshotPreview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 
 
 
