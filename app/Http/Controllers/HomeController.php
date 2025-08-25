@@ -11,26 +11,32 @@ class HomeController extends Controller
 {
     public function index()
     {
-         $user = Auth::user();
-        return view('yoyo',compact('user'));
+        $user = Auth::user();
+        return view('Yoyo',compact('user'));
     }
+
+  
 
     public function Upgrade()
     {
-        return view('Upgrad');
+        $user = Auth::user();
+        return view('Upgrad',compact('user'));
     }
     public function PublicLinks()
     {
-        return view('Public_Links');
+        $user = Auth::user();
+        return view('Public_Links',compact('user'));
     }
     public function SavedInfo()
     {
-        return view('SavedInfo');
+        $user = Auth::user();
+        return view('SavedInfo',compact('user'));
     }
 
     public function ExploreGem()
     {
-        return view('Explore_Gem');
+        $user = Auth::user();
+        return view('Explore_Gem',compact('user'));
     }
 
     public function gemJson()
@@ -88,35 +94,42 @@ class HomeController extends Controller
 
     public function NewGem()
     {
-        return view('NewGem');
+        $user = Auth::user();
+        return view('NewGem',compact('user'));
     }
 
     public function CareerGuide()
     {
-        return view('Career_guide');
+        $user = Auth::user();
+        return view('Career_guide',compact('user'));
     }
 
     public function chessChamp()
     {
-        return view('Chess_champ');
+        $user = Auth::user();
+        return view('Chess_champ',compact('user'));
     }
 
     public function brainstomer()
     {
-        return view('Brainstormer');
+        $user = Auth::user();
+        return view('Brainstormer',compact('user'));
     }
 
     public function codingPartner()
     {
-        return view('Coding_partner');
+        $user = Auth::user();
+        return view('Coding_partner',compact('user'));
     }
     public function writingEditor()
     {
-        return view('Writing_editor');
+        $user = Auth::user();
+        return view('Writing_editor',compact('user'));
     }
     public function learningCoach()
     {
-        return view('Learning_coach');
+        $user = Auth::user();
+        return view('Learning_coach',compact('user'));
     }
 
     public function NewGemStore(Request $request)

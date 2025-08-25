@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Feedback;
+use Illuminate\Support\Facades\Auth;
 
 class SettingController extends Controller
 {
     public function SaveInfo()
     {
-        return view('SavedInfo');
+        $user = Auth::user();
+        return view('SavedInfo',compact('user'));
     }
 
     public function feedbackStore(Request $request)
