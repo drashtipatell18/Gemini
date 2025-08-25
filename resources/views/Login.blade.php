@@ -95,7 +95,8 @@
 
 
             <div class="text-right mt-1">
-                <a href="{{ route('forgotPassword')}}" class="text-sm text-[--add-btn] hover:underline">Forgot password?</a>
+                <a href="{{ route('forgotPassword') }}" class="text-sm text-[--add-btn] hover:underline">Forgot
+                    password?</a>
             </div>
 
 
@@ -173,9 +174,22 @@
                 window.location.href = '/'; // redirect to app
             }
         }
+
+        const theme = localStorage.getItem("theme");
+        if (theme === "dark") {
+            document.body.classList.add("dark");
+        } else {
+            document.body.classList.remove("dark");
+        }
+
+        // Placeholder submit behavior
+        document.getElementById("forgotForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            alert("If this email exists, a password reset link will be sent.");
+        });
     </script>
 
-    <script src="{{ asset('JS/Login.js')}}"></script>
+    <script src="{{ asset('JS/Login.js') }}"></script>
 </body>
 
 </html>

@@ -129,6 +129,19 @@
 
         </form>
     </div>
+    <script>
+        const theme = localStorage.getItem('theme')
+
+        console.log(theme);
+
+
+        if (theme === 'dark') {
+            document.body.classList.add('dark');
+        } else {
+            document.body.classList.remove('dark');
+        }
+    </script>
 </body>
 
 </html>
+                
