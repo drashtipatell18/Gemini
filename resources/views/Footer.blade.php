@@ -23,7 +23,16 @@
 </head>
 
 <body>
-    <script src="{{ asset('JS/Gemini.js') }}"></script>
+    @if (!request()->routeIs('saveinfo'))
+        <script src="{{ asset('JS/Gemini.js') }}"></script>
+    @endif
+    @if (request()->routeIs('public_links') || request()->routeIs('explore_gem') || request()->routeIs('career_guide') || request()->routeIs('chess_champ') || request()->routeIs('code_helper') || request()->routeIs('email_helper') || request()->routeIs('essay_writer') || request()->routeIs('math_tutor') || request()->routeIs('brainstormer') || request()->routeIs('coding_partner'))
+        <script src="{{ asset('JS/index.js') }}"></script>
+    @endif
+    @if (request()->routeIs('new_gem'))
+        <script src="{{ asset('JS/index.js') }}"></script>
+        <script src="{{ asset('JS/NewGem.js') }}"></script>
+    @endif
     @if (request()->routeIs('saveinfo'))
         <script src="{{ asset('JS/SavedInfo.js') }}"></script>
         <script src="{{ asset('JS/index.js') }}"></script>
@@ -94,7 +103,7 @@
 
                 `<div class="relative">
                     <div class="relative group inline-block">
-                      
+
 
                  <button id="profile-button"
                     class="w-8 h-8 rounded-full flex items-center justify-center text-white font-medium overflow-hidden"
@@ -104,7 +113,7 @@
                         background-position: center;
                         background-color: {{ isset($user) && isset($user->profile_image) && $user->profile_image ? 'transparent' : '#78909c' }};
                     ">
-                    @if(!isset($user->profile_image) || !$user->profile_image)
+                    @if (!isset($user->profile_image) || !$user->profile_image)
                         {{ isset($user->name) ? strtoupper(substr($user->name, 0, 1)) : '?' }}
                     @endif
                 </button>
@@ -151,7 +160,7 @@
                 font-size: 2rem;
                 font-weight: 500;
             ">
-            @if(!isset($user->profile_image) || !$user->profile_image)
+            @if (!isset($user->profile_image) || !$user->profile_image)
                 {{ isset($user->name) ? strtoupper(substr($user->name, 0, 1)) : '?' }}
             @endif
         </div>
@@ -178,18 +187,38 @@
                         <!-- Add & Sign Out -->
 
                         ${accountsList ? `
-                                                 <!-- Other Accounts (Toggleable) -->
-                                                    <div class="flex flex-col gap-1 mt-3 mb-3 m-3 ">
-                                                            <button id="toggleAccountsBtn" class="w-full   flex justify-between items-center px-4 py-4 bg-[--bg-main] hover:bg-[--account-hover] transition rounded-t-3xl rounded-b-3xl">
-                                                                <span id="toggleText" class="text-base sm:text-base">Show more accounts</span>
-                                                                <i id="iconExpand" class="fa-solid fa-chevron-down transition-transform duration-300"></i>
-                                                            </button>
+                                                             <!-- Other Accounts (Toggleable) -->
+                                                                <div class="flex flex-col gap-1 mt-3 mb-3 m-3 ">
+                                                                        <button id="toggleAccountsBtn" class="w-full   flex justify-between items-center px-4 py-4 bg-[--bg-main] hover:bg-[--account-hover] transition rounded-t-3xl rounded-b-3xl">
+                                                                            <span id="toggleText" class="text-base sm:text-base">Show more accounts</span>
+                                                                            <i id="iconExpand" class="fa-solid fa-chevron-down transition-transform duration-300"></i>
+                                                                        </button>
 
 
-                                                            <div id="accountList" class="hidden  flex flex-col gap-1 ">
-                                                                ${accountsList}
+                                                                        <div id="accountList" class="hidden  flex flex-col gap-1 ">
+                                                                            ${accountsList}
 
-                                                                <div onclick="handleRedirectSigu()" class="px-4 h-[60px] py-4 flex items-center text-sm justify-start  bg-[--bg-main] hover:bg-[--account-hover] cursor-pointer ">
+                                                                            <div onclick="handleRedirectSigu()" class="px-4 h-[60px] py-4 flex items-center text-sm justify-start  bg-[--bg-main] hover:bg-[--account-hover] cursor-pointer ">
+                                                                                <div class="w-6 h-6 rounded-full flex items-center justify-center mr-2" style="background-color: var(--sidebar-hover);">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--accent-blue)">
+                                                                                    <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+                                                                                </svg>
+                                                                                </div>
+                                                                                Add account
+                                                                            </div>
+
+                                                                        <div onclick="signOutAllAccounts()" class="px-4 h-[60px] py-4 flex items-center text-sm justify-start rounded-b-3xl  bg-[--bg-main] hover:bg-[--account-hover] cursor-pointer ">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" class="mr-2" width="24px" fill="currentColor">
+                                                                            <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                                                                            </svg>
+                                                                            Sign out of all accounts
+                                                                        </div>
+                                                                        </div>
+                                                                </div> `
+                    :
+                    `
+                                                             <div class="flex justify-center items-center gap-[2px] px-4">
+                                                                <div onclick="handleRedirectLogin()" class="px-4 h-[60px] py-4 flex items-center text-sm justify-start rounded-s-full bg-[--bg-main] hover:bg-[--account-hover] cursor-pointer w-[50%]">
                                                                     <div class="w-6 h-6 rounded-full flex items-center justify-center mr-2" style="background-color: var(--sidebar-hover);">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--accent-blue)">
                                                                         <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
@@ -197,33 +226,13 @@
                                                                     </div>
                                                                     Add account
                                                                 </div>
-
-                                                            <div onclick="signOutAllAccounts()" class="px-4 h-[60px] py-4 flex items-center text-sm justify-start rounded-b-3xl  bg-[--bg-main] hover:bg-[--account-hover] cursor-pointer ">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" class="mr-2" width="24px" fill="currentColor">
-                                                                <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
-                                                                </svg>
-                                                                Sign out of all accounts
-                                                            </div>
-                                                            </div>
-                                                    </div> `
-                    :
-                    `
-                                                 <div class="flex justify-center items-center gap-[2px] px-4">
-                                                    <div onclick="handleRedirectLogin()" class="px-4 h-[60px] py-4 flex items-center text-sm justify-start rounded-s-full bg-[--bg-main] hover:bg-[--account-hover] cursor-pointer w-[50%]">
-                                                        <div class="w-6 h-6 rounded-full flex items-center justify-center mr-2" style="background-color: var(--sidebar-hover);">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--accent-blue)">
-                                                            <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
-                                                        </svg>
-                                                        </div>
-                                                        Add account
-                                                    </div>
-                                                    <div onclick="handleRemoveLogin()" class="px-4 h-[60px] py-4 flex items-center text-sm justify-start rounded-e-full bg-[--bg-main] hover:bg-[--account-hover] cursor-pointer w-[50%]">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" class="mr-2" width="24px" fill="currentColor">
-                                                        <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
-                                                        </svg>
-                                                        Sign out
-                                                    </div>
-                                            </div>`
+                                                                <div onclick="handleRemoveLogin()" class="px-4 h-[60px] py-4 flex items-center text-sm justify-start rounded-e-full bg-[--bg-main] hover:bg-[--account-hover] cursor-pointer w-[50%]">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" class="mr-2" width="24px" fill="currentColor">
+                                                                    <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                                                                    </svg>
+                                                                    Sign out
+                                                                </div>
+                                                        </div>`
                 }
 
                         <!-- Footer -->

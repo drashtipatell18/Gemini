@@ -495,14 +495,13 @@
             </div>
         </div>
     </div>
- <script src="{{ asset('JS/NewGem.js') }}"></script>
 @endsection
-  
 
 
-  
 
-    
+
+
+
 
 
 

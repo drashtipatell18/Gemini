@@ -6,12 +6,12 @@
     <div class="w-[100%]">
         <div class="backdrop" id="backdrop"></div>
 
-       
+
         <div class="gemini-data ">
             <div class="main-chat-area">
                 <div class="chat-content-wrapper" style="background-color: var(--bg-main);">
                     <!-- Profile Tooltip -->
-                    <div class="absolute top-6 right-6 group">
+                    {{-- <div class="absolute top-6 right-6 group">
 
                         <div
                             class="absolute right-0 mt-2 p-2 rounded-md bg-[var(--tooltip-bg)] text-[var(--tooltip-text)] text-sm shadow-lg opacity-0 group-hover:opacity-100 transition duration-200 z-10">
@@ -19,7 +19,7 @@
                             <div>denish.kalathiyainfotech</div>
                             <div>denish.kalathiyainfotech@gmail.com</div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Main Content -->
                     <main class="text-center px-4 pt-40">
@@ -127,6 +127,4 @@
             </div>
         </div>
     </div>
-
- <script src="{{ asset('JS/index.js') }}"></script>
 @endsection
