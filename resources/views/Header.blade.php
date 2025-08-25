@@ -61,11 +61,12 @@
                             </li>
                         </ul>
 
-                        <div class="recent-section">
-                            <h3>Recent</h3>
-                            <ul id="recent-chats">
-                            </ul>
-                        </div>
+<div class="recent-section" id="recent-section" style="display: none;">
+  <h3>Recent</h3>
+  <ul id="recent-chats">
+    <!-- Recent chats will be listed here -->
+  </ul>
+</div>
                     </div>
                 </div>
 
@@ -396,6 +397,31 @@
         </div>
     </div>
 
+        
+    <script>
+        function isLoggedIn() {
+        return !!JSON.parse(localStorage.getItem('user'));
+    }
+
+    function toggleRecentSection() {
+        const recentSection = document.getElementById('recent-section');
+
+        if (!recentSection) return;
+
+        if (isLoggedIn()) {
+            recentSection.style.display = 'block'; // or '' to use default
+            renderRecentChats(); // load chats
+        } else {
+            recentSection.style.display = 'none'; // hide if not logged in
+        }
+    }
+    
+
+    // Call this when the page loads
+    window.onload = function () {
+        toggleRecentSection();
+    };
+    </script>
     <!-- feedback js -->
     <script>
         const feedback_message = document.getElementById("feedback_message");
@@ -444,7 +470,6 @@
             }
         });
     </script>
-
 
 
 </body>
